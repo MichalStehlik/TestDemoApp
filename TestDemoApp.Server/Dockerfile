@@ -12,6 +12,14 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
+# Install Node.js
+RUN apt-get update
+RUN apt-get install curl
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
+RUN apt-get -y install nodejs
+
+# Install .NET MAUI workloads
 COPY ["TestDemoApp.Server/TestDemoApp.Server.csproj", "TestDemoApp.Server/"]
 COPY ["testdemoapp.client/testdemoapp.client.esproj", "testdemoapp.client/"]
 RUN dotnet restore "./TestDemoApp.Server/TestDemoApp.Server.csproj"
