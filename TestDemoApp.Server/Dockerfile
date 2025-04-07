@@ -13,12 +13,12 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Install Node.js
+# Install Node.js 20.x
 RUN apt-get update && \
-    apt-get install -y curl gnupg && \
+    apt-get install -y curl gnupg ca-certificates && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs && \
-    node --version && npm --version
+    node -v && npm -v
 
 # Install .NET MAUI workloads
 COPY ["TestDemoApp.Server/TestDemoApp.Server.csproj", "TestDemoApp.Server/"]
