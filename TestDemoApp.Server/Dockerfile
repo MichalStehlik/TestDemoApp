@@ -14,10 +14,11 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Install Node.js
-RUN apt-get update
-RUN apt-get install curl
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
-RUN apt-get -y install nodejs
+RUN apt-get update && \
+    apt-get install -y curl gnupg && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    node --version && npm --version
 
 # Install .NET MAUI workloads
 COPY ["TestDemoApp.Server/TestDemoApp.Server.csproj", "TestDemoApp.Server/"]
